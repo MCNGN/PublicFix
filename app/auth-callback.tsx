@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Linking from "expo-linking";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
@@ -8,6 +9,18 @@ export default function AuthCallback() {
   const params = useLocalSearchParams();
 
   useEffect(() => {
+    // Add this debugging block at the beginning of your effect
+    console.log("Auth callback mounted, params:", params);
+    console.log("Raw params:", JSON.stringify(params));
+
+    Linking.getInitialURL().then((url) => {
+      console.log("Initial URL in auth-callback:", url);
+      if (url) {
+        const parsed = Linking.parse(url);
+        console.log("Parsed URL data:", parsed);
+      }
+    });
+
     const handleAuthData = async () => {
       try {
         // Extract token and userData from URL params
@@ -38,20 +51,20 @@ export default function AuthCallback() {
 
           // Redirect to home screen after a short delay
           setTimeout(() => {
-            router.replace("/");
+            router.replace("/home");
           }, 500);
         } else {
           console.log("No token found in URL params");
           // Redirect back to login if no token
           setTimeout(() => {
-            router.replace("/login");
+            router.replace("/");
           }, 500);
         }
       } catch (error) {
         console.error("Error in auth callback:", error);
         // Redirect back to login on error
         setTimeout(() => {
-          router.replace("/login");
+          router.replace("/");
         }, 500);
       }
     };

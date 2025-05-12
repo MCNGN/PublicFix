@@ -77,7 +77,7 @@ export default function RootLayout() {
 
   return (
     <PaperProvider theme={theme}>
-      {/* {isAuthenticated ? (
+      {isAuthenticated ? (
         // Authenticated user routes
         <Stack
           screenOptions={{
@@ -88,7 +88,7 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen
-            name="index"
+            name="home"
             options={{
               title: "Home",
             }}
@@ -105,14 +105,14 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen
-            name="login"
+            name="index"
             options={{
               headerShown: false,
             }}
           />
         </Stack>
-      )} */}
-      <Stack />
+      )}
+      {/* <Stack /> */}
     </PaperProvider>
   );
 }
